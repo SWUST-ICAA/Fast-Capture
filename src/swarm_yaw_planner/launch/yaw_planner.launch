@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- ==================== Yaw Planner Node ==================== -->
+    
+    <!-- 优化权重参数 -->
+    <arg name="yaw_weight" default="1.0" doc="Outward alignment cost weight"/>
+    <arg name="vis_weight" default="10.0" doc="Visibility cost weight"/>
+    <arg name="sm_weight" default="0.1" doc="Smoothness cost weight"/>
+    
+    <!-- FOV参数 -->
+    <arg name="fov_horizontal_deg" default="86.0" doc="Horizontal FOV in degrees"/>
+    <arg name="fov_vertical_deg" default="57.0" doc="Vertical FOV in degrees (for cone visualization)"/>
+    <arg name="safety_margin_deg" default="5.0" doc="Safety margin for FOV constraint in degrees"/>
+    <arg name="fov_ray_length" default="5.0" doc="Length of FOV rays in RViz"/>
+    <arg name="fov_line_width" default="0.05" doc="Width of FOV boundary lines"/>
+    <arg name="cone_alpha" default="0.3" doc="Transparency of FOV cone (0-1)"/>
+    
+    <!-- 无人机配置 -->
+    <arg name="num_drones" default="4" doc="Number of drones"/>
+    
+    <!-- 求解器参数 -->
+    <arg name="max_iterations" default="50" doc="Maximum Ceres solver iterations"/>
+    
+    <!-- 定时器参数 -->
+    <arg name="timer_period" default="0.1" doc="Timer callback period in seconds"/>
+    
+    <!-- 坐标系 -->
+    <arg name="world_frame" default="world" doc="World frame ID for visualization"/>
+    
+    <!-- 话题名称配置 -->
+    <arg name="drone_odom_topic_prefix" default="/drone_" doc="Prefix for drone odometry topics"/>
+    <arg name="drone_odom_topic_suffix" default="_visual_slam/odom" doc="Suffix for drone odometry topics"/>
+    <arg name="target_topic" default="/fxxzxec_estimator_target_target" doc="Target position topic"/>
+    <arg name="center_topic" default="/mean_center_target" doc="Formation center topic"/>
+    <arg name="yaw_cmd_topic_suffix" default="/yaw_cmd" doc="Suffix for yaw command topics"/>
+
+    <!-- 启动 yaw_planner_node -->
+    <node pkg="your_package_name" type="yaw_planner_node" name="yaw_planner_node" output="screen">
+        <!-- 优化权重 -->
+        <param name="yaw_weight" value="$(arg yaw_weight)"/>
+        <param name="vis_weight" value="$(arg vis_weight)"/>
+        <param name="sm_weight" value="$(arg sm_weight)"/>
+        
+        <!-- FOV参数 -->
+        <param name="fov_horizontal_deg" value="$(arg fov_horizontal_deg)"/>
+        <param name="fov_vertical_deg" value="$(arg fov_vertical_deg)"/>
+        <param name="safety_margin_deg" value="$(arg safety_margin_deg)"/>
+        <param name="fov_ray_length" value="$(arg fov_ray_length)"/>
+        <param name="fov_line_width" value="$(arg fov_line_width)"/>
+        <param name="cone_alpha" value="$(arg cone_alpha)"/>
+        
+        <!-- 无人机配置 -->
+        <param name="num_drones" value="$(arg num_drones)"/>
+        
+        <!-- 求解器参数 -->
+        <param name="max_iterations" value="$(arg max_iterations)"/>
+        
+        <!-- 定时器参数 -->
+        <param name="timer_period" value="$(arg timer_period)"/>
+        
+        <!-- 坐标系 -->
+        <param name="world_frame" value="$(arg world_frame)"/>
+        
+        <!-- 话题名称 -->
+        <param name="drone_odom_topic_prefix" value="$(arg drone_odom_topic_prefix)"/>
+        <param name="drone_odom_topic_suffix" value="$(arg drone_odom_topic_suffix)"/>
+        <param name="target_topic" value="$(arg target_topic)"/>
+        <param name="center_topic" value="$(arg center_topic)"/>
+        <param name="yaw_cmd_topic_suffix" value="$(arg yaw_cmd_topic_suffix)"/>
+    </node>
+
+</launch>

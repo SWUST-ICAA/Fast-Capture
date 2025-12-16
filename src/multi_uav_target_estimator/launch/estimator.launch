@@ -1,0 +1,49 @@
+<launch>
+  <node pkg="multi_uav_target_estimator" type="multi_uav_target_estimator_node" 
+        name="multi_uav_target_estimator" output="screen">
+    
+    <!-- ==================== 基本参数 ==================== -->
+    <param name="window_size" value="20" />           <!-- 滑动窗口大小 -->
+    <param name="num_drones" value="4" />             <!-- 无人机数量 -->
+    <param name="buffer_size" value="200" />          <!-- 历史观测缓冲区大小 -->
+    <param name="publish_rate" value="20.0" />        <!-- 发布频率 (Hz) -->
+    
+    <!-- ==================== 模拟噪声 (可选) ==================== -->
+    <!-- 为输入观测添加高斯噪声进行测试 -->
+    <param name="noise_std_x" value="0.0" />          <!-- X轴噪声标准差 (m) -->
+    <param name="noise_std_y" value="0.0" />          <!-- Y轴噪声标准差 (m) -->
+    <param name="noise_std_z" value="0.0" />          <!-- Z轴噪声标准差 (m) -->
+    
+    <!-- ==================== 位姿图优化 - Sigma 参数 ==================== -->
+    <!-- Sigma 代表各项约束的不确定性(噪声标准差),用于计算信息矩阵 Σ^{-1} -->
+    <param name="sigma_prior" value="0.2" />          <!-- 先验约束噪声 -->
+    <param name="sigma_observation" value="0.1" />    <!-- 观测约束噪声 -->
+    <param name="sigma_relative_motion" value="0.3" /><!-- 相对运动约束噪声 -->
+    <param name="sigma_second_order" value="0.2" />   <!-- 二阶平滑约束噪声 -->
+    <param name="sigma_third_order" value="0.2" />    <!-- 三阶平滑约束噪声 -->
+    
+    <!-- ==================== 位姿图优化 - Weight 参数 ==================== -->
+    <!-- Weight 用于调节不同残差项之间的相对重要性 -->
+    <!-- 最终信息矩阵: Σ^{-1} = weight / sigma^2 * I -->
+    <param name="weight_prior" value="10.0" />         <!-- 先验约束权重 -->
+    <param name="weight_observation" value="1.0" />   <!-- 观测约束权重 -->
+    <param name="weight_relative_motion" value="1.0" /><!-- 相对运动约束权重 -->
+    <param name="weight_second_order" value="1000.0" />  <!-- 二阶平滑约束权重 -->
+    <param name="weight_third_order" value="1000.0" />   <!-- 三阶平滑约束权重 -->
+    
+    <!-- ==================== 约束开关 ==================== -->
+    <param name="use_prior" value="true" />           <!-- 是否使用先验约束 -->
+    <param name="use_observation" value="true" />     <!-- 是否使用观测约束 -->
+    <param name="use_relative_motion" value="true" /> <!-- 是否使用相对运动约束 -->
+    <param name="use_second_order" value="false" />    <!-- 是否使用二阶平滑约束 -->
+    <param name="use_third_order" value="true" />    <!-- 是否使用三阶平滑约束 -->
+    
+    <!-- ==================== 相对运动模式 ==================== -->
+    <!-- true: 全连接图(窗口内所有节点对), false: 仅相邻节点 -->
+    <param name="use_full_graph" value="true" />
+    
+    <!-- ==================== 调试选项 ==================== -->
+    <param name="enable_verbose" value="false" />     <!-- Ceres 详细输出 -->
+    
+  </node>
+</launch>

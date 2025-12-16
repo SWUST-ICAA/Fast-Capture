@@ -1,0 +1,23 @@
+# Roundup Formation Optimizer Parameters
+
+# 代价函数权重
+w_fit: 1.0        # 位置拟合权重
+w_dist: -30      # 距离正则化权重 (负值鼓励紧密包围)
+w_obs: 1.0       # 障碍物避障权重
+w_col: 5.0       # 碰撞避免权重
+w_reg: 20        # 编队规则性权重
+
+# 几何约束
+R_min: 2.0        # 最小捕获半径 (m)
+R_max: 4.0       # 最大捕获半径 (m)
+d_obs: 1.5        # 障碍物安全距离 (m)
+d_col: 1.0        # 无人机间最小间距 (m)
+
+# 优化器参数
+max_iterations: 100
+function_tolerance: 1.0e-6
+gradient_tolerance: 1.0e-10
+parameter_tolerance: 1.0e-8
+
+# 节点参数
+update_rate: 25.0  # Hz

@@ -1,0 +1,15 @@
+<launch>
+    <!-- Arguments -->
+    <arg name="config_file" default="$(find roundup_formation)/config/params.yaml"/>
+    <arg name="output" default="screen"/>
+    
+    <!-- Roundup Formation Node -->
+    <node pkg="roundup_formation" type="roundup_formation_node" name="roundup_formation_node"
+          output="$(arg output)" respawn="false">
+        
+        <!-- Load parameters from YAML file -->
+        <rosparam file="$(arg config_file)" command="load"/>
+        
+    </node>
+    
+</launch>
